@@ -83,12 +83,22 @@ public class MyLinkedList{
       ret = ret + place.get() + ", ";
       place = place.getNext();
     }
+    if(size == 0){
+      return "{}";
+    }
     return  "{" + ret.substring(0, ret.length()-2) + "}";
   }
 
   public String remove(int index){
     if(index > size || index < 0){
       throw new IndexOutOfBoundsException("Invalid value");
+    }
+    if(size == 1){
+      String outta = start.get();
+      start = null;
+      end = null;
+      size--;
+      return outta;
     }
     if(index == 0){
       String outta = start.get();
@@ -97,7 +107,7 @@ public class MyLinkedList{
       size--;
       return outta;
     }
-    if(index == size){
+    if(index == size-1){
       String outta = end.get();
       end = end.getPrev();
       end.setNext(null);
@@ -120,6 +130,8 @@ public class MyLinkedList{
     other.start.setPrev(this.end);
     this.end = other.end;
     size = this.size + other.size;
-    
+    other.start = null;
+    other.end = null;
+    other.size = 0;
   }
 }
